@@ -1,0 +1,68 @@
+{
+    "name": "serverless-aws-alb",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/softprops/serverless-aws-alb.git"
+    },
+    "license": "MIT",
+    "displayName": "serverless-alb",
+    "description": "Support for registering functions as AWS ALB targets",
+    "version": "0.0.1",
+    "categories": [
+        "Other"
+    ],
+    "main": "dist/index.js",
+    "files": [
+        "dist",
+        "package.json",
+        "README.md"
+    ],
+    "scripts": {
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run lint",
+        "test": "nyc mocha --require ts-node/register --require source-map-support/register --recursive tests/*.ts",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    },
+    "nyc": {
+        "include": [
+            "src/**/*.ts",
+            "src/**/*.tsx"
+        ],
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "**/*.d.ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "sourceMap": true,
+        "instrument": true
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/chai-as-promised": "^7.1.0",
+        "@types/fs-extra": "5.0.0",
+        "@types/mocha": "^2.2.48",
+        "@types/node": "^8.10.25",
+        "chai": "^4.2.0",
+        "chai-as-promised": "^7.1.1",
+        "mocha": "^5.2.0",
+        "nyc": "^13.1.0",
+        "serverless": "^1.35.1",
+        "source-map-support": "^0.5.9",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1"
+    },
+    "dependencies": {
+        "fs-extra": "^5.0.0"
+    }
+}

@@ -4,4 +4,8 @@
 npm i
 npm link ../.
 
-# todo simulated tests
+npx serverless --help | grep AwsAlb > /dev/null 2>&1
+if [[ $? != 0 ]]; then
+  echo "failed to install plugin"
+  exit 1
+fi

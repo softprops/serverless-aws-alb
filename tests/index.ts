@@ -1,16 +1,17 @@
 import * as chai from "chai";
-//import * as chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 //import {expect} from "chai";
-import AwsAlb from '../src';
+import AwsAlb = require("../src");
+import { Provider } from '../src/@types/serverless';
 
 before(() => {
     chai.should();
-    //chai.use(chaiAsPromised);
+    chai.use(chaiAsPromised);
 });
 
 // https://www.chaijs.com/api/bdd/
 describe('AwsAlb', () => {
-    it('works', async () => {
+    it('requires serverless.provider to be aws', async () => {
         const serverless = {
             cli: {
                 log(args: any) { },
@@ -19,14 +20,20 @@ describe('AwsAlb', () => {
             service: {
                 service: 'foobar',
                 provider: {
-                    name: 'aws'
+                    name: 'notaws'
                 }
+            },
+            getProvider(name: string): Provider  {
+                return {
+                    request(svc: string, operation: string, args?: object) {
+                        return Promise.resolve({});
+                    }
+                };
             }
         };
         const alb = new AwsAlb(
             serverless, {}
         );
-        chai.expect(alb).to.not.be.undefined
-
+        return alb.deploy().should.be.rejectedWith(Error)
     });
 });

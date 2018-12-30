@@ -10,6 +10,11 @@ export interface ServerlessInstance {
             name: string
         }
     };
+    getProvider(name: string): Provider;
+}
+
+export interface Provider {
+    request(svc: string, operation: string, args?: object): Promise<object>;
 }
 
 export interface ServerlessOptions {
